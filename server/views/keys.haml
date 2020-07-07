@@ -1,0 +1,6 @@
+%h2 All keys
+
+-if @keys
+    %ul.list-group
+    -@keys.each do |key| 
+        %li.list-group-item=key.to_s

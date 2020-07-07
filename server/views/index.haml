@@ -1,0 +1,80 @@
+
+/ Content Wrapper. Contains page content
+.content-wrapper
+  / Content Header (Page header)
+  .content-header
+    .container-fluid
+      %h4{"data-controller" => "example"} EXAMPLE
+
+      %h5
+      %div{"data-controller" => "view",
+           "data-view-mode" => "replace",
+           "data-view-url" => "all-keys"}
+        %a{href: "#", "data-action" => "click->view#visit"}
+          custom link 
+        %p{"data-target" => "view.output"}
+
+      %h5
+      %div{"data-controller" => "view",
+           "data-view-mode" => "replace",
+           "data-view-url" => "history"}
+        %a{href: "#", "data-action" => "click->view#visit"}
+          custom link 
+        %p{"data-target" => "view.output"}
+
+      %h5 Play
+      %div{"data-controller" => "view",
+           "data-view-mode" => "replace",
+           "data-view-url" => "play"}
+        %a{href: "#", "data-action" => "click->view#visit"}
+          Start 
+        %p{"data-target" => "view.output"}
+
+
+      .row.mb-2
+        .col-sm-6
+          %h1.m-0.text-dark Starter Page
+        / /.col
+        .col-sm-6
+          %ol.breadcrumb.float-sm-right
+            %li.breadcrumb-item
+              %a{:href => "#"} Home
+            %li.breadcrumb-item.active Starter Page
+
+  .content
+    .container-fluid
+      .row
+        .col-lg-6
+          .card
+            .card-body
+              %h5.card-title Card title
+              %p.card-text
+                Some quick example text to build on the card title and make up the bulk of the card's
+                content.
+              %a.card-link{:href => "#"} Card link
+              %a.card-link{:href => "#"} Another link
+          .card.card-primary.card-outline
+            .card-body
+              %h5.card-title Card title
+              %p.card-text
+                Some quick example text to build on the card title and make up the bulk of the card's
+                content.
+              %a.card-link{:href => "#"} Card link
+              %a.card-link{:href => "#"} Another link
+          / /.card
+        / /.col-md-6
+        .col-lg-6
+          .card
+            .card-header
+              %h5.m-0 Featured
+            .card-body
+              %h6.card-title Special title treatment
+              %p.card-text With supporting text below as a natural lead-in to additional content.
+              %a.btn.btn-primary{:href => "#"} Go somewhere
+          .card.card-primary.card-outline
+            .card-header
+              %h5.m-0 Featured
+            .card-body
+              %h6.card-title Special title treatment
+              %p.card-text With supporting text below as a natural lead-in to additional content.
+              %a.btn.btn-primary{:href => "#"} Go somewhere

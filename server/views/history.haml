@@ -1,0 +1,8 @@
+%h2 History
+
+-event = @first[0] 
+-ts, id = event[0].split "-"
+%p 
+  Timestamp #{ts} - #{id}
+  =Time.at(ts.to_i / 1000)
+
