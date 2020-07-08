@@ -23,13 +23,12 @@
         %p{"data-target" => "view.output"}
 
       %h5 Play
-      %div{"data-controller" => "view",
-           "data-view-mode" => "replace",
-           "data-view-url" => "play"}
-        %a{href: "#", "data-action" => "click->view#visit"}
-          Start 
-        %p{"data-target" => "view.output"}
-
+      %div{"data-controller" => "player",
+           "data-view-url" => "cars"}
+        %a{href: "#", "data-action" => "click->player#play"}
+          Start cars
+        %p{"data-target" => "player.output"}
+        %p{"data-target" => "player.ratio"}
 
       .row.mb-2
         .col-sm-6
@@ -45,9 +44,45 @@
     .container-fluid
       .row
         .col-lg-6
+
+          .card.card-primary
+            .card-header
+              %h3.card-title Connection à Redis
+            / /.card-header
+            / form start
+            %form{:role => "form", "data-controller" => "form", "data-form-url" => "/connect"}
+              .card-body
+                Connection: 
+                %span{"data-target" => "form.result"} - 
+              .card-body
+                .form-group
+                  %label{:for => "exampleInputEmail1"} Hôte
+                  %input#hostInput.form-control{:name => "host", :placeholder => "locahost", :type => "text", :value => "localhost"}/
+                .form-group
+                  %label{:for => "exampleInputPassword1"} Port
+                  %input#portInput.form-control{:name => "port", :placeholder => "Port", :type => "text", :value => "6379"}/
+                .form-group
+                  %label{:for => "exampleInputPassword1"} Auth (optionnel)
+                  %input#authInput.form-control{:name => "auth", :placeholder => "", :type => "text"}/
+                -# .form-group
+                  %label{:for => "exampleInputFile"} File input
+                  .input-group
+                    .custom-file
+                      %input#exampleInputFile.custom-file-input{:type => "file"}/
+                      %label.custom-file-label{:for => "exampleInputFile"} Choose file
+                    .input-group-append
+                      %span.input-group-text{:id => ""} Upload
+                -# .form-check
+                  %input#exampleCheck1.form-check-input{:type => "checkbox"}/
+                  %label.form-check-label{:for => "exampleCheck1"} Check me out
+              / /.card-body
+              .card-footer
+                %button.btn.btn-primary{"data-action" => "click->form#submit"} Submit
+
+
           .card
             .card-body
-              %h5.card-title Card title
+              %h5.card-title Connection à Redis
               %p.card-text
                 Some quick example text to build on the card title and make up the bulk of the card's
                 content.

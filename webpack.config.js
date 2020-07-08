@@ -8,10 +8,14 @@ module.exports = {
   entry: {
     bundle: "./src/index.js"
   },
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: './public'
+  },
 
   output: {
     filename: "[name].js",
-    path: path.resolve(__dirname, "public")
+    path: path.resolve(__dirname, "public"),
   },
 
   mode: "production",
