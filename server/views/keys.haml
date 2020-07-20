@@ -1,6 +1,41 @@
 %h2 All keys
 
 -if @keys
-    %ul.list-group
-    -@keys.each do |key| 
-        %li.list-group-item=key.to_s
+  %ul.list-group
+    -@keys.zip(@types).each do |key, type| 
+      %li.list-group-item
+        #{key.to_s}  type: #{type.to_s}
+        -if type == "string"
+
+          %span{"data-controller" => "view",
+                "data-view-mode" => "replace",
+                "data-view-url" => "/get/#{key}"}
+            %a{href: "#", "data-action" => "click->view#visit"}
+              get
+            %span{"data-target" => "view.output"}
+          %span ---
+          %span{"data-controller" => "view",
+                "data-view-mode" => "replace",
+                "data-view-url" => "/get-json/#{key}"}
+            %a{href: "#", "data-action" => "click->view#visit"}
+              get as JSON
+            %span{"data-target" => "view.output"}            
+
+         
+        -if type == "stream"
+
+          %span{"data-controller" => "view",
+              "data-view-mode" => "replace",
+              "data-view-url" => "/play/#{key}"}
+            %a{href: "#", "data-action" => "click->view#visit"}
+              play
+            %span{"data-target" => "view.output"}
+             
+          %span{"data-controller" => "view",
+              "data-view-mode" => "replace",
+              "data-view-url" => "/stop/#{key}"}
+            %a{href: "#", "data-action" => "click->view#visit"}
+              Stop
+            %span{"data-target" => "view.output"}   
+    -#@keys.each do |key| 
+    -#%li.list-group-item=key.to_s

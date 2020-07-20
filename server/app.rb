@@ -11,6 +11,8 @@ require './player'
 class RedisPlayer < Sinatra::Base
 #  register Sinatra::Namespace
 
+  set :bind, '0.0.0.0'
+  ### Share the public folder with NodeJS 
   set :public_folder, File.dirname(__FILE__) + '/../public'
 
   class << self
@@ -67,7 +69,6 @@ class RedisPlayer < Sinatra::Base
 
     RedisPlayer.players["cars2"] = player
     RedisPlayer.threads["cars2"] = Thread.new { player.play(RedisPlayer.redis) }
-
   end
 
   get '/play' do
@@ -84,8 +85,44 @@ class RedisPlayer < Sinatra::Base
     haml :history, :layout => false
   end
 
+  known_json_keys = %w(cars zones)
+
+  get '/get/:key' do 
+    RedisPlayer.redis.get(params[:key])
+  end
+
+  get '/get-json/:key' do 
+    JSON.parse(RedisPlayer.redis.get(params[:key])).to_s
+  end
+
+  get '/play/:key' do 
+    k = params[:key]
+    
+    return "Already started" if RedisPlayer.players[k]
+    @events = RedisPlayer.redis.xrange(k, "-", "+")
+    @first = @events
+    ## Start playing at same speed, replay SET and PUBLISH of all the key/value logged
+    player = Player.new
+    player.parse_stream(@events)
+
+    ## TODO: Use fibers instead of threads.
+    RedisPlayer.players[k] = player
+    RedisPlayer.threads[k]  = Thread.new { player.play(RedisPlayer.redis) }
+    "Started"
+  end
+
+  get '/stop/:key' do 
+    k = params[:key]
+    RedisPlayer.threads[k]&.kill
+
+    RedisPlayer.threads[k] = nil
+    RedisPlayer.players[k] = nil
+    "Stopped"
+  end
+
   get '/all-keys' do
     @keys = RedisPlayer.redis.keys
+    @types = @keys.map{ |key| RedisPlayer.redis.type(key)}
     haml :"keys", :layout => false
   end
 

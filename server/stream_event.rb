@@ -1,4 +1,4 @@
-class StreamEvent
+class TobiiStreamEvent
   attr_reader :time_stamp, :status, :data
   def initialize(data)
     @time_stamp = data[:ts] / 1000.0  ## Convert to ms

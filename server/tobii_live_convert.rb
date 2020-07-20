@@ -5,8 +5,9 @@ require "redis"
 # Add active support extensions for time manipulations
 require 'active_support/all'
 
-
+########################
 #### DEPRECATED FILE, HERE TO COPY INTO SERVER CODE 
+########################
 
 # redis = Redis.new(host: "10.0.1.1", port: 6380, db: 15)
 redis = Redis.new

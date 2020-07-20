@@ -8,7 +8,10 @@ require 'active_support/all'
 # redis = Redis.new(host: "10.0.1.1", port: 6380, db: 15)
 redis = Redis.new
 
+########################
 #### DEPRECATED FILE, HERE TO COPY INTO SERVER CODE 
+########################
+
 require "./vehicle_event"
 
 ## Max length 2.10mn
