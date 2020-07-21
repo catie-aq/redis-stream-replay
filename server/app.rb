@@ -17,6 +17,7 @@ class RedisPlayer < Sinatra::Base
 
   class << self
     attr_accessor :redis, :threads, :players
+    attr_reader :connected
     def connect(options = {})
       
       host = options["host"] || "localhost" 
@@ -28,7 +29,7 @@ class RedisPlayer < Sinatra::Base
       else 
         @redis = Redis.new(host: host, port: port) 
       end
-
+      @connected = true
       ## TODO: clean previous threads and players
       @threads = {}
       @players = {}
@@ -121,6 +122,8 @@ class RedisPlayer < Sinatra::Base
   end
 
   get '/all-keys' do
+
+    return "Not connected" if not RedisPlayer.connected
     @keys = RedisPlayer.redis.keys
     @types = @keys.map{ |key| RedisPlayer.redis.type(key)}
     haml :"keys", :layout => false
