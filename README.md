@@ -14,9 +14,8 @@ The codebase comes from Stimulus by Basecamp.
 
 ```
 $ yarn install
-$ yarn start
+$ yarn build
 ```
-
 
 ### Backend 
 
@@ -26,3 +25,13 @@ The backend is a sinatra application, reading keys from Redis.
 $ cd server
 $ ruby app.rb
 ```
+
+### Connection 
+
+Enter your Redis URL, port and password if any. 
+
+You can list all keys, and read ones set with `SET` commands. 
+You can "replay" data that was inserted with `XADD`. 
+
+The inserted data will be replayed as `PUBLISH` events. It is 
+replayed in realtime given a fixed error step. 
