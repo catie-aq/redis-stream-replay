@@ -17,6 +17,13 @@ $ yarn install
 $ yarn build
 ```
 
+### WSL Install 
+
+* Install Ubuntu 22.04. 
+* Install `nodejs` and yarn following this [guide](https://linuxize.com/post/how-to-install-yarn-on-ubuntu-20-04/).
+* Run `bundle install` 
+* `bundle exec ruby app.rb` 
+
 ### Backend 
 
 The backend is a sinatra application, reading keys from Redis. 
@@ -25,6 +32,13 @@ The backend is a sinatra application, reading keys from Redis.
 $ cd server
 $ ruby app.rb
 ```
+
+### WSL Install 
+
+* Install Ubuntu 22.04. 
+* Install `redis ruby ruby-dev build-essential` 
+* Run `bundle install` 
+* `bundle exec ruby app.rb`  
 
 ### Connection 
 

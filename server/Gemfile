@@ -1,3 +1,9 @@
+source "https://rubygems.org"
+
 gem 'sinatra'
+gem 'rackup'
 gem 'haml'
 gem 'sinatra-contrib'
+gem 'redis'
+gem 'activesupport'
+gem 'puma'

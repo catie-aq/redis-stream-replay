@@ -103,7 +103,7 @@ class RedisPlayer < Sinatra::Base
     @events = RedisPlayer.redis.xrange(k, "-", "+")
     @first = @events
     ## Start playing at same speed, replay SET and PUBLISH of all the key/value logged
-    player = Player.new
+    player = Player.new(k)
     player.parse_stream(@events)
 
     ## TODO: Use fibers instead of threads.

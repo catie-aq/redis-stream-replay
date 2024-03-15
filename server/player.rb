@@ -15,23 +15,30 @@ class Event
         @data = event_data[1]      
     end
 
-    def send(redis)
+    def send(redis, main_key="")
         @data.each_pair do |key, value| 
-            # p "Sending to #{key} " 
-            redis.set(key, value)
-            redis.publish(key, value)     
+            # redis.set(key, value)
+          
+            if main_key.size == 0 
+              redis.publish(key, value)
+            else 
+              p "Publish #{main_key + ":" + key}" 
+           
+              redis.publish(main_key + ":" + key, value)
+            end       
         end
     end
 end
 
 class Player 
     attr_accessor :small_amount_of_time
-    attr_reader :stream_idx, :stream_time
+    attr_reader :stream_idx, :stream_time, :key 
 
-    def initialize()
+    def initialize(key)
         @beginning_of_time = nil
         @stream_time = []
         @small_amount_of_time = 0.001 # 0.0001
+        @key = key
     end
 
     ## TODO: Factorize all of this to a single method
@@ -116,7 +123,7 @@ class Player
 
                     ## Send the redis commands
                     @stream_time[time_index].each do |stream_event|
-                        stream_event.send(redis)
+                        stream_event.send(redis, @key)
                     end
                 end 
             end
@@ -129,6 +136,9 @@ class Player
             
         end
 
+        RedisPlayer.players[@key] = nil
+        RedisPlayer.threads[@key] = nil
+        
         # p "END OF STREAM ! #{end_time}"
     end
 end
